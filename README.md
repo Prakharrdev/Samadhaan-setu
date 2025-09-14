@@ -66,8 +66,8 @@ Ensure you have the following installed:
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/MrPanda009/SIH-Project-V2.git
-   cd SIH-Project-V2
+   git clone https://github.com/Prakharrdev/Samadhaan-setu.git
+   cd Samadhaan-setu
    ```
 
 2. **Install dependencies**
@@ -134,7 +134,7 @@ SIH-Project-V2/
 - [x] Progressive Web App(PWA) / mobile app functionality
 - [x] SHA-265 Encryption
 - [x] Digipin Integration
-- [ ] Dark Mode
+- [x] Dark Mode
 - [ ] Heat Map
 - [ ] Multi-language support
 
@@ -186,15 +186,15 @@ We welcome contributions from the community! Here's how you can help:
 
 ### Need Help? Have Questions?
 
-📧 **Email**: support@civicplatform.com  
+📧 **Email**: Prakhar06.work@gmail.com 
 💬 **Discord**: [Join our community](https://discord.gg/civicplatform)  
-🐛 **Issues**: [Report a bug](https://github.com/MrPanda009/SIH-Project-V2/issues)  
-📖 **Docs**: [Documentation Wiki](https://github.com/MrPanda009/SIH-Project-V2/wiki)
+🐛 **Issues**: [Report a bug](https://github.com/Prakharrdev/Samadhaan-setu/Bug)  
+
 
 ### ⭐ Star us on GitHub!
 If you find this project helpful, please consider giving it a star!
 
-[![Star History Chart](https://api.star-history.com/svg?repos=MrPanda009/SIH-Project-V2&type=Date)](https://star-history.com/#MrPanda009/SIH-Project-V2&Date)
+
 
 </div>
 
