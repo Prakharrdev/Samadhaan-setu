@@ -22,6 +22,12 @@ export interface ThemeContextValue {
   toggleDarkMode: () => void
 }
 
+export interface ThemeProviderProps {
+  children: React.ReactNode
+  defaultTheme?: Theme
+  storageKey?: string
+}
+
 // Color palette configuration for dark mode
 // This can be customized based on your design system
 export const DARK_MODE_CONFIG = {
@@ -71,11 +77,7 @@ export function ThemeProvider({
   children,
   defaultTheme = 'system',
   storageKey = 'theme',
-}: {
-  children: React.ReactNode
-  defaultTheme?: Theme
-  storageKey?: string
-}) {
+}: ThemeProviderProps) {
   // Initialize theme from localStorage or use default
   const [theme, setThemeState] = useState<Theme>(
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
@@ -94,7 +96,7 @@ export function ThemeProvider({
     root.classList.remove('light', 'dark')
 
     // Determine actual theme to apply
-    let activeTheme: 'dark' | 'light' = theme
+    let activeTheme: 'dark' | 'light' = theme as 'dark' | 'light'
 
     if (theme === 'system') {
       // Detect system preference
@@ -123,7 +125,7 @@ export function ThemeProvider({
 
       if (isToggleShortcut) {
         event.preventDefault()
-        handleToggleDarkMode()
+        toggleDarkMode()
       }
     }
 
@@ -135,8 +137,8 @@ export function ThemeProvider({
    * Toggle dark mode between light and dark
    * If theme is 'system', switch to explicit dark/light based on current state
    */
-  const handleToggleDarkMode = () => {
-    setTheme((prevTheme) => {
+  const toggleDarkMode = () => {
+    setThemeState((prevTheme) => {
       // If using system preference, switch to explicit theme
       if (prevTheme === 'system') {
         return isDarkMode ? 'light' : 'dark'
@@ -149,7 +151,7 @@ export function ThemeProvider({
   /**
    * Set theme and persist to localStorage
    */
-  const setTheme = (newTheme: Theme) => {
+  const handleSetTheme = (newTheme: Theme) => {
     localStorage.setItem(storageKey, newTheme)
     setThemeState(newTheme)
   }
@@ -157,12 +159,14 @@ export function ThemeProvider({
   const value: ThemeContextValue = {
     theme,
     isDarkMode,
-    setTheme,
-    toggleDarkMode: handleToggleDarkMode,
+    setTheme: handleSetTheme,
+    toggleDarkMode,
   }
 
   return (
-    <ThemeContext.Provider value={value}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={value}>
+      {children}
+    </ThemeContext.Provider>
   )
 }
 
