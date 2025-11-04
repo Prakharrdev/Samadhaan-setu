@@ -58,30 +58,42 @@ export default function AuthLogin({ onLoginSuccess, onSwitchToSignup }: AuthLogi
       setError('Email and Password are required')
       return
     }
-    
+
     setLoading(true)
     setError('')
-    
+
     try {
-      // Verify credentials without logging in
-      const result = await authAPI.signIn(formData.email, formData.password)
-      
-      if (result.session) {
-        // Credentials are correct - store session temporarily and proceed to OTP verification
-        setTempSession(result.session)
-        
-        // Generate OTP for verification
-        const otp = Math.floor(100000 + Math.random() * 900000).toString()
-        setGeneratedOtp(otp)
-        console.log(`🔐 Login OTP: ${otp}`) // Display OTP in console for testing
-        console.log(`💡 You can also use the master OTP: 123456`) // Master OTP info
-        
-        // Sign out temporarily - we'll sign in again after OTP verification
-        await authAPI.signOut()
-        
-        // Move to step 2
-        setStep(2)
-        setCaptcha(generateCaptcha()) // Generate new captcha for step 2
+      // Use new auth handler that checks super admin first, then Supabase
+      const result = await signIn(formData.email, formData.password)
+
+      if (result.session || result.user) {
+        // Check if this is a super admin account
+        const isSuperAdmin = result.user?.user_metadata?.is_super_admin || result.user?.user_metadata?.isSuperAdmin
+
+        if (isSuperAdmin) {
+          // Super admin bypasses OTP verification
+          console.log('✅ Super admin authenticated successfully')
+          setTempSession(result.session || result.user)
+
+          // Directly complete login for super admin
+          onLoginSuccess()
+        } else {
+          // Regular user needs OTP verification
+          setTempSession(result.session || result.user)
+
+          // Generate OTP for verification
+          const otp = Math.floor(100000 + Math.random() * 900000).toString()
+          setGeneratedOtp(otp)
+          console.log(`🔐 Login OTP: ${otp}`) // Display OTP in console for testing
+          console.log(`💡 You can also use the master OTP: 123456`) // Master OTP info
+
+          // Sign out temporarily - we'll sign in again after OTP verification
+          await authAPI.signOut()
+
+          // Move to step 2
+          setStep(2)
+          setCaptcha(generateCaptcha()) // Generate new captcha for step 2
+        }
       } else {
         throw new Error('Invalid email or password. Please check your credentials and try again.')
       }
