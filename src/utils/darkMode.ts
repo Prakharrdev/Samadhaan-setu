@@ -10,7 +10,7 @@
  * - Easy integration with Tailwind CSS
  */
 
-import React, { createContext, useContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState, ReactNode } from 'react'
 
 // Type definitions for theme system
 export type Theme = 'dark' | 'light' | 'system'
@@ -23,7 +23,7 @@ export interface ThemeContextValue {
 }
 
 export interface ThemeProviderProps {
-  children: React.ReactNode
+  children: ReactNode
   defaultTheme?: Theme
   storageKey?: string
 }
@@ -73,11 +73,11 @@ export const ThemeContext = createContext<ThemeContextValue>(initialState)
  *   <YourApp />
  * </ThemeProvider>
  */
-export function ThemeProvider({
+export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   defaultTheme = 'system',
   storageKey = 'theme',
-}: ThemeProviderProps) {
+}) => {
   // Initialize theme from localStorage or use default
   const [theme, setThemeState] = useState<Theme>(
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
@@ -163,10 +163,10 @@ export function ThemeProvider({
     toggleDarkMode,
   }
 
-  return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
+  return React.createElement(
+    ThemeContext.Provider,
+    { value },
+    children
   )
 }
 
