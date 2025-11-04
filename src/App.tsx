@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Toaster } from './components/ui/sonner'
-import { ThemeProvider } from './components/ThemeProvider'
+import { ThemeProvider } from './utils/darkMode'
 import LandingPage from './components/LandingPage'
 import AuthLogin from './components/AuthLogin'
 import AuthSignup from './components/AuthSignup'
