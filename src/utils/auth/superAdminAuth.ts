@@ -7,6 +7,9 @@
 import { verifySuperAdminCredentials, createSuperAdminSession, isSuperAdmin, SUPER_ADMIN_ENABLED } from '../../config/superAdmin'
 import { LoginCredentials, AuthUser, AuthSession } from './types'
 
+// Re-export SUPER_ADMIN_ENABLED so it can be imported from this module
+export { SUPER_ADMIN_ENABLED }
+
 /**
  * Check if credentials match a super admin account
  * Returns super admin user data if credentials are correct
