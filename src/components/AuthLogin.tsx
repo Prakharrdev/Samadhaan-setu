@@ -6,7 +6,8 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from './ui/
 import { Alert, AlertDescription } from './ui/alert'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from './ui/dialog'
 import { authAPI } from '../utils/api'
-import { Shield, Phone, KeyRound, RefreshCw } from 'lucide-react'
+import { signIn, forgotPassword, verifyForgotPasswordOTP, resetPassword, SUPER_ADMIN_ENABLED } from '../utils/auth'
+import { Shield, Phone, KeyRound, RefreshCw, AlertTriangle } from 'lucide-react'
 import Footer from './Footer'
 import PasswordValidation, { validatePassword, isPasswordValid } from './PasswordValidation'
 
