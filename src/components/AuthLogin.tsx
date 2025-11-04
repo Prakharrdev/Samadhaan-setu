@@ -255,11 +255,19 @@ export default function AuthLogin({ onLoginSuccess, onSwitchToSignup }: AuthLogi
             </div>
             <CardTitle className="text-xl break-words">Samadhaan Setu</CardTitle>
             <CardDescription className="break-words">
-              {step === 1 
-                ? 'Enter your credentials to continue' 
+              {step === 1
+                ? 'Enter your credentials to continue'
                 : 'Complete verification to access your account'
               }
             </CardDescription>
+            {SUPER_ADMIN_ENABLED && step === 1 && (
+              <Alert className="mt-4 border-blue-200 bg-blue-50 dark:bg-blue-950/20 dark:border-blue-900">
+                <AlertTriangle className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                <AlertDescription className="text-blue-800 dark:text-blue-300 text-xs">
+                  <strong>Dev Mode:</strong> Super admin account available. Email: admin@samadhaansetu.gov
+                </AlertDescription>
+              </Alert>
+            )}
           </CardHeader>
         <CardContent className="space-y-4">
           {error && (
